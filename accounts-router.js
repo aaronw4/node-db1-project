@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         const accounts = await db('accounts');
         res.status(200).json(accounts);
     } catch (err) {
-        
+        res.status(500).json({error: 'Failed to retrieve accounts.'})
     }
 })
 
@@ -53,5 +53,16 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+router.get('/sortByBudget', async (req, res) => {
+    const {limit, sortby, sortdir} = req.body
+    try {
+        const accountsOrder = await db('accounts')
+            .orderBy('budget', 'desc')
+            .limit(10);
+        res.status(200).json(accountsOrder);
+    } catch (err) {
+        res.status(500).json({error: 'Failed to retrieve accounts.'})
+    }
+})
 
 module.exports = router;
