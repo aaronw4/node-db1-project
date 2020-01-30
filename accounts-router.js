@@ -22,5 +22,14 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.post('/', async (req, res) => {
+    try {
+        const account = await db('accounts').insert(req.body);
+        res.status(201).json(account);
+    } catch (err) {
+        res.status(500).json({error: 'Failed to post account.'})
+    }
+})
+
 
 module.exports = router;
