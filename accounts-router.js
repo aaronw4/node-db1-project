@@ -31,5 +31,16 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+    try {
+        const accountUpdate = await db('accounts')
+            .where('id', req.params.id)
+            .update(req.body);
+        res.status(200).json({updated: accountUpdate});
+    } catch {
+        res.status(500).json({error: 'Failed to update account.'})
+    }
+})
+
 
 module.exports = router;
